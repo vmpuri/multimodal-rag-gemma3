@@ -247,12 +247,12 @@ class QueryEngine:
             return []
 
         try:
-            search_result = self.qdrant_client.search(
+            search_result = self.qdrant_client.query_points(
                 collection_name=self.collection_name,
-                query_vector=query_embedding,
+                query=query_embedding,
                 limit=top_k,
                 with_payload=True
-            )
+            ).points
             return search_result
         except Exception as e:
             self.progress_callback(f"Error during Qdrant search: {e}")
